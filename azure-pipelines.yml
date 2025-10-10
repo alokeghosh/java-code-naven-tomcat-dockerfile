@@ -38,7 +38,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-    - task: CmdLine@2
-      displayName: 'Update deployment.yaml image tag'
+    - task: PowerShell@2
       inputs:
-        script: yq e '.spec.template.spec.containers[0].image = "agpocacr.azurecr.io/alokeghoshjavacodenaventomcatdockerfile:$(Build.BuildId)"' -i aks_all_yaml/java-maven-deployment.yaml
+        targetType: 'inline'
+        script: '(Get-Content java-maven-deployment.yaml) -replace ''image: alokeghoshjavacodenaventomcatdockerfile:.*'', ''image: alokeghoshjavacodenaventomcatdockerfile:$(Build.BuildId)'' | Set-Content java-maven-deployment.yaml'
