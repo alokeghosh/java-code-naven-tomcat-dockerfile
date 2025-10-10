@@ -41,4 +41,4 @@ stages:
     - task: CmdLine@2
       displayName: 'Update deployment.yaml image tag'
       inputs:
-        script: yq e '.spec.template.spec.containers[0].image = "agpocacr.azurecr.io/alokeghoshjavacodenaventomcatdockerfile:$(Build.BuildId)"' -i java-maven-deployment.yaml
+        script: yq e '.spec.template.spec.containers[0].image = "agpocacr.azurecr.io/alokeghoshjavacodenaventomcatdockerfile:$(Build.BuildId)"' -i aks_all_yaml/java-maven-deployment.yaml
