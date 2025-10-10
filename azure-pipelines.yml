@@ -53,5 +53,5 @@ stages:
         publishLocation: 'Container'
     - task: replacetokens@6
       inputs:
-        root: '$(Build.ArtifactStagingDirectory)/drop'
+        root: '$(Build.ArtifactStagingDirectory)'
         sources: 'java-maven-deployment.yaml'
