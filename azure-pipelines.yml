@@ -51,21 +51,3 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
-
-- stage: Deploy_in_aks
-  displayName: "Release Stage"
-  pool:
-    name: alokeagent
-    vmImage: $(vmImageName)
-  jobs:
-  - deployment: deploy_job
-    environment: 'aks-test'
-    strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: replacetokens@6
-              displayName: 'replace token'
-              inputs:
-                root: '$(Pipeline.Workspace)/drop'
-                sources: 'java-maven-deployment.yaml'
