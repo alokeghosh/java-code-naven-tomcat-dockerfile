@@ -39,19 +39,6 @@ stages:
         tags: |
           $(tag)
     - task: CmdLine@2
+      displayName: 'Update deployment.yaml image tag'
       inputs:
-        script: 'docker rmi -f agpocacr.azurecr.io/alokeghoshjavacodenaventomcatdockerfile:$(Build.BuildId)'
-    - task: CopyFiles@2
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)/aks_all_yaml'
-        Contents: '**'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
-    - task: replacetokens@6
-      inputs:
-        root: '$(Build.ArtifactStagingDirectory)'
-        sources: 'java-maven-deployment.yaml'
+        script: yq e '.spec.template.spec.containers[0].image = "agpocacr.azurecr.io/alokeghoshjavacodenaventomcatdockerfile:$(Build.BuildId)"' -i java-maven-deployment.yaml
