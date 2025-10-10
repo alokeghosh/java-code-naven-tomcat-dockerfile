@@ -38,7 +38,34 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-    - task: PowerShell@2
+    - task: CmdLine@2
       inputs:
-        targetType: 'inline'
-        script: '(Get-Content java-maven-deployment.yaml) -replace ''image: alokeghoshjavacodenaventomcatdockerfile:.*'', ''image: alokeghoshjavacodenaventomcatdockerfile:$(Build.BuildId)'' | Set-Content java-maven-deployment.yaml'
+        script: 'docker rmi -f agpocacr.azurecr.io/alokeghoshjavacodenaventomcatdockerfile:$(Build.BuildId)'
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)/aks_all_yaml'
+        Contents: '**'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+- stage: Deploy_in_aks
+  displayName: "Release Stage"
+  pool:
+    name: alokeagent
+    vmImage: $(vmImageName)
+  jobs:
+  - deployment: deploy_job
+    environment: 'aks-test'
+    strategy:
+        runOnce:
+          deploy:
+            steps:
+            - task: replacetokens@6
+              displayName: 'replace token'
+              inputs:
+                root: '$(Pipeline.Workspace)/drop'
+                sources: 'java-maven-deployment.yaml'
