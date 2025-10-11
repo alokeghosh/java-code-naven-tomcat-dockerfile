@@ -38,7 +38,12 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    - task: CmdLine@2
+      displayName: remove the docker image from self hosts vm
+      inputs:
+        script: 'docker rmi -f agpocacr.azurecr.io/alokeghoshjavacodenaventomcatdockerfile:$(Build.BuildId)'
     - task: Bash@3
+      displayName: update the aks manifest file for container image 
       inputs:
         filePath: 'scripts/updateaksManifests.sh'
         arguments: '$(imageRepository) $(tag)'
