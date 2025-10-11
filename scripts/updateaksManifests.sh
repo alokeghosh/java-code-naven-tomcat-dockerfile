@@ -9,7 +9,7 @@ cd /tmp/temp_repo
 # Make changes to the Kubernetes manifest file(s)
 # For example, let's say you want to change the image tag in a deployment.yaml file
 #sed -i "s|image:.*|image: <ACR-REGISTRY-NAME>/$2:$3|g" k8s-specifications/$1-deployment.yaml
-sed -i "s|image:.*|image: agpocacr.azurecr.io/$2:$3|g" aks_all_yaml/java-maven-deployment.yaml
+sed -i "s|image:.*|image: agpocacr.azurecr.io/:$3|g" aks_all_yaml/java-maven-deployment.yaml
 # Add the modified files
 git add .
 # Commit the changes
