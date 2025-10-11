@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: java-maven-app-container
-          image: agpocacr.azurecr.io/alokeghoshjavacodenaventomcatdockerfile:479
+          image: agpocacr.azurecr.io/alokeghoshjavacodenaventomcatdockerfile:480
           ports:
             - containerPort: 8080
 ---
