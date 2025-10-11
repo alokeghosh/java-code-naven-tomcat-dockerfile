@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: java-maven-app-container
-          image: agpocacr.azurecr.io/476:
+          image: agpocacr.azurecr.io/:
           ports:
             - containerPort: 8080
 ---
