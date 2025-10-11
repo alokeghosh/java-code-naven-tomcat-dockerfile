@@ -40,5 +40,5 @@ stages:
           $(tag)
     - task: Bash@3
       inputs:
-        filePath: 'git.sh'
+        filePath: 'scripts/updateaksManifests.sh'
         arguments: '$(imageRepository) $(tag)'
