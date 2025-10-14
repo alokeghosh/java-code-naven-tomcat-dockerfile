@@ -4,11 +4,12 @@
     <title>Java Maven Tomcat App</title>
 </head>
 <body>
-    <h2>Welcome to the Java Maven Tomcat App done --- aloke ghosh in LAB !</h2>
+    <h2>Welcome to the Java Maven Tomcat App done --- this LAB for testing - aloke ghosh !</h2>
     <a href="hello">Say Hello</a>
     <p>Server Time: <%= new java.util.Date() %></p>
 </body>
 
 </html>
+
 
 
